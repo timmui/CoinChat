@@ -14,4 +14,5 @@ module.exports = {
     MSAppPassword: process.env.MICROSOFT_APP_PASSWORD,
     MSTextAnalyticsKey: process.env.MICROSOFT_TEXT_ANALYTICS_KEY,
     LuisSubscriptionKey: process.env.LUIS_SUBSCRIPTION_KEY,
+    LuisAppId: process.env.LUIS_APP_ID,
 };

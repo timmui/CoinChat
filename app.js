@@ -25,11 +25,11 @@ server.post('/api/messages', connector.listen());
 
 // Static root page
 server.get('/', (req, res) => {
-    res.send(200, 'API Version ${config.apiVersion} currently running.');
+    res.send(200, `API Version ${config.apiVersion} currently running.`);
 });
 
 // LUIS Setup
-var model = 'https://api.projectoxford.ai/luis/v1/application?id=6bfcb96e-0dbb-443d-8c75-36224da1b80f&subscription-key=' + config.LuisSubscriptionKey;
+var model = `https://api.projectoxford.ai/luis/v1/application?id=${config.LuisAppId}&subscription-key=${config.LuisSubscriptionKey}`;
 var recognizer = new builder.LuisRecognizer(model);
 var dialog = new builder.IntentDialog({ recognizers: [recognizer] })
 bot.dialog('/', dialog);
