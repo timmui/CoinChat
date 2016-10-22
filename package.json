@@ -1,8 +1,11 @@
 {
-  "name": "CoinChat",
+  "name": "coinchat",
   "version": "1.0.0",
   "description": "A chatbot for banking",
-  "main": "server.js",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
   "repository": {
     "url": "git@github.com:timmui/CoinChat.git",
     "type": "git"
@@ -11,7 +14,11 @@
   "license": "MIT",
   "dependencies": {
     "botbuilder": "^3.3.3",
+    "dotenv": "^2.0.0",
     "lodash": "^4.16.4",
     "restify": "^4.1.1"
+  },
+  "devDependencies": {
+    "eslint": "^3.8.1"
   }
 }

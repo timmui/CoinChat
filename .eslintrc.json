@@ -1,0 +1,77 @@
+{
+    "parserOptions": {
+        "ecmaVersion": 6
+    },
+    "env": {
+        "es6": true,
+        "browser": true,
+        "node": true,
+        "jquery": true
+    },
+    "rules": {
+        // Whitespace
+        "eol-last": "warn",
+        "indent": ["warn", 4],
+        "linebreak-style": ["warn", "unix"],
+        "no-trailing-spaces": ["off", { "skipBlankLines": true }],
+
+        // Formatting
+        "semi": ["warn", "always"],
+        "quotes": ["warn", "single", {
+            "avoidEscape": true,
+            "allowTemplateLiterals": true
+        }],
+        "dot-notation": ["warn", {
+            "allowKeywords": true,
+            "allowPattern": ""
+        }],
+        "dot-location": ["warn", "property"],
+        "brace-style": ["warn", "1tbs"],
+        "camelcase": ["warn", {"properties": "never"}],
+        "comma-style": ["warn", "last"],
+        "comma-dangle": ["warn", "always-multiline"],
+
+        // Formatting: Spacing
+        "array-bracket-spacing": ["warn", "never"],
+        "block-spacing": "warn",
+        "comma-spacing": "warn",
+        "computed-property-spacing": ["warn", "never"],
+        "keyword-spacing": "warn",
+        "object-curly-spacing": ["warn", "always"],
+        "padded-blocks": ["warn", "never"],
+        "space-before-blocks": ["warn", "always"],
+        "space-in-parens": ["warn", "never"],
+        "space-infix-ops": "warn",
+
+        // Analysis
+        "complexity": "warn",
+        "accessor-pairs": "warn",
+        "block-scoped-var": "error",
+        "eqeqeq": ["warn", "smart"],
+        "no-cond-assign": ["error", "always"],
+        "no-constant-condition": "warn",
+        "no-unused-expressions": "warn",
+        "no-unused-vars": "warn",
+        "radix": "error",
+
+        // Dissallowed features
+        "no-console": "off",
+        "no-floating-decimal": "error",
+        "no-new-object": "warn",
+        "no-return-assign": ["error", "always"],
+        "no-self-compare": "error",
+        "no-sequences": "error",
+        "no-throw-literal": "error",
+
+        // Functions
+        "func-names": ["warn", "always"],
+        "no-spaced-func": "warn",
+        "space-before-function-paren": ["warn", { "anonymous": "always", "named": "never" }],
+        "callback-return": ["warn", ["done", "next", "callback"]]
+    },
+    "globals": {
+        "$": true,
+        "moment": true, 
+        "_": true
+    }
+}
