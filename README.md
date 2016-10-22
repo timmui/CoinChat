@@ -26,7 +26,7 @@ All environment variables should be set in a `.env` file in the root of the proj
 #### .env File Example
 
 ```sh
-PORT=3030
+PORT=3978
 NODE_ENV=development
 ```
 
@@ -36,5 +36,5 @@ NODE_ENV=development
   * MICROSOFT_TEXT_ANALYTICS_KEY : Text Analytics key for sentiment
 
 ### Misc
-  * PORT : Port for Node (default: `3030`)
+  * PORT : Port for Node (default: `3978`)
   * NODE_ENV : Tells Node what environment we want to run in. `development` or `production` (default: `development`)
