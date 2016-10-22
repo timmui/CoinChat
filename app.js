@@ -37,13 +37,53 @@ bot.dialog('/', dialog);
 //=========================================================
 // Bots Dialogs
 //=========================================================
+dialog.matches('Greeting', [
+    (session, args, next) => {
+        session.send(['Greetings!', 'Hello!', 'Hi!']);
+    }
+]);
+
 dialog.matches('CreateAccount', [
     (session, args, next) => {
         var accountAction = builder.EntityRecognizer.findEntity(args.entities, 'AccountAction');
         var accountType = builder.EntityRecognizer.findEntity(args.entities, 'AccountType');
-        session.send('Recieved Account Action and Type', accountAction, accountType);
+        if (!accountType) {
+            builder.Prompts.choice(session, 'What type of account do you want to open?', ['Checking', 'Savings', 'Credit Card']);
+        } else {
+            return next;
+        }
+    },
+    (session, results) => {
+        if (results.response) {
+            session.send(`Ok, opening a ${results.response.entity} account.`);
+        } else {
+            session.send('Something went wrong.');
+        }
+    }
+]);
+
+dialog.matches('ViewAccount', [
+    (session, args, next) => {
+        var accountType = builder.EntityRecognizer.findEntity(args.entities, 'AccountType');
+        if (!accountType) {
+            builder.Prompts.text(session, 'Which account do you want to view?', ['Checking', 'Savings', 'Credit Card']);
+        } else {
+            return next;
+        }
+    },
+    (session, results) => {
+        if (results.reponse) {
+            session.send(`Ok, here is your ${results.response.entity} account.`);
+        } else {
+            session.send('Something went wrong.');
+        }
+    }
+]);
+
+dialog.matches('FindATM', [
+    (session, args, next) => {
+        session.send('Here are ATMs.');
     }
 ]);
 
 dialog.onDefault(builder.DialogAction.send('I\'m sorry, I didn\'t quite catch that.'));
-
