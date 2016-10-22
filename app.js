@@ -29,7 +29,7 @@ server.get('/', (req, res) => {
 });
 
 // LUIS Setup
-var model = 'https://api.projectoxford.ai/luis/v1/application?id=6bfcb96e-0dbb-443d-8c75-36224da1b80f&subscription-key=70c5729403d64977871078f0c34e46ac';
+var model = 'https://api.projectoxford.ai/luis/v1/application?id=6bfcb96e-0dbb-443d-8c75-36224da1b80f&subscription-key=' + config.LuisSubscriptionKey;
 var recognizer = new builder.LuisRecognizer(model);
 var dialog = new builder.IntentDialog({ recognizers: [recognizer] })
 bot.dialog('/', dialog);
@@ -41,7 +41,7 @@ dialog.matches('CreateAccount', [
     (session, args, next) => {
         var accountAction = builder.EntityRecognizer.findEntity(args.entities, 'AccountAction');
         var accountType = builder.EntityRecognizer.findEntity(args.entities, 'AccountType');
-        session.send('Receieved Account Action and Type', accountAction, accountType);
+        session.send('Recieved Account Action and Type', accountAction, accountType);
     }
 ]);
 
