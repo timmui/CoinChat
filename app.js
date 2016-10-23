@@ -113,7 +113,13 @@ dialog.matches('ScanCheck', [
         api.scanCheck(session.message.attachments[0].contentUrl, (str) => {
             session.send(`${str} \n\nIs there anything else I can help you with?`);
         });
-    }
+    },
+]);
+
+dialog.matches('NetWorth', [
+    (session, args) => {
+        //TODO add api call
+    },
 ]);
 
 dialog.matches('Confirm', [
