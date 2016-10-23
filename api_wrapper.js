@@ -45,7 +45,6 @@ function getAccountNumber(type, cb) {
 function deposit(type, amount, cb) {
     getAccountNumber(type, function (res) {
         if (res==null) return cb("could not create account");
-        console.log(res);
         var options = {
         uri: 'http://api.reimaginebanking.com/accounts/'+ res + '/deposits?key='+ config.CapitalOneKey,
         method: 'POST',
@@ -57,9 +56,7 @@ function deposit(type, amount, cb) {
         }
       }
       request(options, function (error, response, body) {
-        console.log(response)
       if (!error && response.statusCode == 201) {
-        console.log(body);
         cb('Successfully deposited');
       }
       else {
