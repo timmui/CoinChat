@@ -17,4 +17,5 @@ module.exports = {
     LuisAppId: process.env.LUIS_APP_ID,
     ComputerVisionSubscriptionKey: process.env.COMPUTER_VISION_SUBSCRIPTION_KEY,
     CapitalOneKey: process.env.CAPITAL_ONE_KEY,
+    CapitalOneUser: process.env.CAPITAL_ONE_USER
 }
