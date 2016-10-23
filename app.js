@@ -73,7 +73,7 @@ dialog.matches('CreateAccount', [
         for (var i in session.userData) {
             str = str + session.userData[i];
         }
-        api.createAccount(results.response, str, function (str) { 
+        api.createAccount(results.response, str, function (str) {
             session.send(`${str} \n\nIs there anything else I can help you with?`);
         });
     },
@@ -95,8 +95,8 @@ dialog.matches('ViewAccount', [
                 api.getAccounts('Checking', function(str){ session.send(str); });
                 api.getAccounts('Savings', function(str){ session.send(str); });
                 api.getAccounts('Credit Card', function(str){
-                    session.send(`${str} \n\nIs there anything else I can help you with?`);
-                });
+                    session.send(`${str}`);
+                })
             } else {
                 session.send(`Ok, here is your ${results.response.entity} account.`);
                 api.getAccounts(results.response.entity, function (str) {

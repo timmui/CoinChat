@@ -251,13 +251,21 @@ function getNetWorth(cb) {
             if (!error && response.statusCode == 200) {
                 var jsonResponse = JSON.parse(body);
                 console.log(jsonResponse);
-                
-                // TODO: the math for this
-                var totalAsset=0;
-                var totalDebt=0;
+                var assets = 0;
+                var debt = 0;
 
-                var netWorth = totalAsset - totalDebt;
-                return cb(`Total Assets: $${totalAsset}\n\nTotal Debts: $${totalDebt}\n\nNet Worth: $${netWorth}`);
+                for (var i = 0; i < jsonResponse.length; i++) {
+                    if (jsonResponse[i].type === 'Credit Card') {
+                      debt = debt + jsonResponse[i].balance;
+                    }
+                    else {
+                      assets = assets + jsonResponse[i].balance;
+                    }
+                }
+
+
+                var netWorth = assets - debt;
+                return cb(`\n\nTotal Assets: $${assets}\n\nTotal Debts: $${debt}\n\nNet Worth: $${netWorth}`);
             }
         });
 };
