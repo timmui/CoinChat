@@ -1,6 +1,6 @@
 var restify = require('restify');
 var builder = require('botbuilder');
-
+var api = require('./api_wrapper');
 var config = require('./config');
 
 //=========================================================
@@ -74,6 +74,7 @@ dialog.matches('ViewAccount', [
     (session, results) => {
         if (results.response) {
             session.send(`Ok, here is your ${results.response.entity} account.`);
+            api.getAccounts(results.response.entity, function (str) {session.send(str)});
         } else {
             session.send('Something went wrong.');
         }
@@ -82,7 +83,8 @@ dialog.matches('ViewAccount', [
 
 dialog.matches('FindATM', [
     (session, args, next) => {
-        session.send('Here are ATMs.');
+      session.send("Here are the nearest ATM's")
+      api.findAtms(function (str) {session.send(str)});
     }
 ]);
 
