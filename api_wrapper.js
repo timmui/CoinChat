@@ -73,23 +73,22 @@ function scanCheck(imageUrl, cb) {
             'Ocp-Apim-Subscription-Key': config.ComputerVisionSubscriptionKey,
         },
         body: JSON.stringify({
-            'url': 'http://www.muis.gov.sg/zakat/images/Calculation_and_payment/Cheque%20(front).jpg',
+            'url': imageUrl,
         }),
     };
     request(options, (error, response, body) => {
-        //console.error(error);
-        //console.log(response);
-
         if (!error && response.statusCode == 200) {
             var jsonResponse = body;
-            console.log(jsonResponse);
+            //console.log("----------------\n\n"+jsonResponse);
             var dollarValue = '';
             var filteredJson = jsonResponse.match(/\$[^t]*.*/g);
+            //console.log(filteredJson);
             var dollarValue = filteredJson[0].match(/\d+(\.\d{2})/g);
+            //console.log(dollarValue);
             cb(`$ ${dollarValue}`);
         }
         else {
-            cb('your call failed');
+            cb('Sorry, I didn\'t catch that. Can you please try again?');
         }
     });
 };
