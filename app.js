@@ -50,7 +50,7 @@ dialog.matches('CreateAccount', [
         if (!accountType) {
             builder.Prompts.choice(session, 'What type of account do you want to open?', ['Checking', 'Savings', 'Credit Card']);
         } else {
-            return next;
+            return next({ response: accountType });
         }
     },
     (session, results) => {
@@ -66,13 +66,13 @@ dialog.matches('ViewAccount', [
     (session, args, next) => {
         var accountType = builder.EntityRecognizer.findEntity(args.entities, 'AccountType');
         if (!accountType) {
-            builder.Prompts.text(session, 'Which account do you want to view?', ['Checking', 'Savings', 'Credit Card']);
+            builder.Prompts.choice(session, 'Which account do you want to view?', ['Checking', 'Savings', 'Credit Card']);
         } else {
-            return next;
+            return next({ response: accountType });
         }
     },
     (session, results) => {
-        if (results.reponse) {
+        if (results.response) {
             session.send(`Ok, here is your ${results.response.entity} account.`);
         } else {
             session.send('Something went wrong.');
