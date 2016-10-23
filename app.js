@@ -144,7 +144,7 @@ dialog.matches('Confirm', [
     },
 ]);
 
-dialog.matches('Goodbye', [
+dialog.matches('GoodBye', [
     (session) => {
         session.send('Goodbye. Thank you for using ChatBot!');
     },
