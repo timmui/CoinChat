@@ -15,4 +15,5 @@ module.exports = {
     MSTextAnalyticsKey: process.env.MICROSOFT_TEXT_ANALYTICS_KEY,
     LuisSubscriptionKey: process.env.LUIS_SUBSCRIPTION_KEY,
     LuisAppId: process.env.LUIS_APP_ID,
+    ComputerVisionSubscriptionKey: process.env.COMPUTER_VISION_SUBSCRIPTION_KEY,
 };

@@ -31,14 +31,14 @@ server.get('/', (req, res) => {
 // LUIS Setup
 var model = `https://api.projectoxford.ai/luis/v1/application?id=${config.LuisAppId}&subscription-key=${config.LuisSubscriptionKey}`;
 var recognizer = new builder.LuisRecognizer(model);
-var dialog = new builder.IntentDialog({ recognizers: [recognizer] })
+var dialog = new builder.IntentDialog({ recognizers: [recognizer] });
 bot.dialog('/', dialog);
 
 //=========================================================
 // Bots Dialogs
 //=========================================================
 dialog.matches('Greeting', [
-    (session, args, next) => {
+    (session) => {
         session.send(['Greetings!', 'Hello!', 'Hi!']);
     }
 ]);
@@ -85,5 +85,15 @@ dialog.matches('FindATM', [
         session.send('Here are ATMs.');
     }
 ]);
+
+dialog.matches('ScanCheck', [
+    (session, args) => {
+        builder.Prompts.attachment(session, 'Please take a picture of the check');
+    },
+    (session, results) => {
+        console.error(session.message.attachments);
+        session.send('Success');
+    }
+])
 
 dialog.onDefault(builder.DialogAction.send('I\'m sorry, I didn\'t quite catch that.'));
