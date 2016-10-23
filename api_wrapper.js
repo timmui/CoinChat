@@ -269,10 +269,10 @@ function findAtms(cb) {
         if (!error && response.statusCode == 200) {
             var jsonResponse = JSON.parse(body).data;
             var str = '';
-            for (var i = 0; i < 4; i++) {
-                str += + (i + 1) + ') ' + jsonResponse[i].name + ' , ';
-                str += str + ('Address: ' + jsonResponse[i].address.street_number + ' ' + jsonResponse[i].address.street_name + ', ' + jsonResponse[i].address.city) + ', ';
-                str += str + ('Hours: ' + jsonResponse[i].hours[0]) + '\n\n';
+            for (var i = 0; i < 2; i++) {
+                str += jsonResponse[i].name + ' , ';
+                str += ('Address: ' + jsonResponse[i].address.street_number + ' ' + jsonResponse[i].address.street_name + ', ' + jsonResponse[i].address.city) + ', ';
+                str += ('Hours: ' + jsonResponse[i].hours[0]) + '\n\n';
             }
             return cb(str);
         }
