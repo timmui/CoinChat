@@ -103,8 +103,8 @@ dialog.matches('ScanCheck', [
         builder.Prompts.attachment(session, 'Please take a picture of the check');
     },
     (session, results) => {
-        console.error('Processing image: ' + session.message.attachments.contentUrl);
-        api.scanCheck(session.message.attachments.contentUrl, (str) => { 
+        console.error('Processing image: ' + session.message.attachments[0].contentUrl);
+        api.scanCheck(session.message.attachments[0].contentUrl, (str) => { 
             session.send(str);
         });
     },
