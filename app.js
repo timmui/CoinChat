@@ -146,7 +146,7 @@ dialog.matches('Confirm', [
 
 dialog.matches('GoodBye', [
     (session) => {
-        session.send('Goodbye. Thank you for using ChatBot!');
+        session.send('Goodbye. Thank you for using CoinChat!');
     },
 ]);
 
