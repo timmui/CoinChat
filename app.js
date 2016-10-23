@@ -87,9 +87,9 @@ dialog.matches('ViewAccount', [
         if (results.response) {
             if (results.response.entity == 'All'){
                 session.send('Ok, here are all of your accounts.');
-                api.getAccounts('Checking:', function(str){ session.send(str); });
-                api.getAccounts('Savings:', function(str){ session.send(str); });
-                api.getAccounts('Credit Card:', function(str){
+                api.getAccounts('Checking', function(str){ session.send(str); });
+                api.getAccounts('Savings', function(str){ session.send(str); });
+                api.getAccounts('Credit Card', function(str){
                     session.send(`${str} \n\nIs there anything else I can help you with?`);
                 });
             } else {
