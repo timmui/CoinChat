@@ -1,6 +1,76 @@
 var request = require('request');
 var config = require('./config');
-const username = '580ba86e360f81f104544d31';
+var async = require('async');
+const username = config.account;
+
+function deleteUser(cb){
+    var options = {
+        uri: 'http://api.reimaginebanking.com/accounts/' + username + '?key=' + config.CapitalOneKey,
+        method: 'DELETE',
+    };
+    request(options, (error, response) => {
+        if (!error && response.statusCode == 204) {
+            cb(true);
+        }
+        else {
+            console.error('Failed to delete user.');
+            cb(false);
+        }
+    });
+}
+exports.deleteUser = deleteUser;
+
+function initAccounts(cb) {
+    var credit = {
+        uri: 'http://api.reimaginebanking.com/customers/' + username + '/accounts?key=' + config.CapitalOneKey,
+        method: 'POST',
+        json:
+        {
+            'type': 'Credit Card',
+            'nickname': 'Venture® Rewards',
+            'rewards': 0,
+            'balance': -60,
+        },
+    };
+    var checking = {
+        uri: 'http://api.reimaginebanking.com/customers/' + username + '/accounts?key=' + config.CapitalOneKey,
+        method: 'POST',
+        json:
+        {
+            'type': 'Checking',
+            'nickname': '360 Checking® Account',
+            'rewards': 0,
+            'balance': 1000,
+        },
+    };
+    var savings = {
+        uri: 'http://api.reimaginebanking.com/customers/' + username + '/accounts?key=' + config.CapitalOneKey,
+        method: 'POST',
+        json:
+        {
+            'type': 'Savings',
+            'nickname': '360 Savings® Account',
+            'rewards': 0,
+            'balance': 15000,
+        },
+    };
+
+    async.waterfall([
+        (next) => request(credit, next),
+        (err, next) => request(checking, next),
+        (err, next) => request(savings, next),
+    ], (error, response, body) => {
+        if (!error && response.statusCode == 201) {
+            console.log(body);
+            cb(true);
+        }
+        else {
+            console.error('Failed to create accounts.');
+            cb(false);
+        }
+    });
+}
+exports.initAccounts = initAccounts;
 
 function createAccount(name, type, cb) {
     var options = {
@@ -23,7 +93,7 @@ function createAccount(name, type, cb) {
             cb('Could not create account. Please try again');
         }
     });
-};
+}
 
 exports.createAccount = createAccount;
 
