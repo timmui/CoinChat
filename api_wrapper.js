@@ -1,9 +1,10 @@
 var request = require('request')
 var config = require('./config')
+var username = '580ba86e360f81f104544d31';
 
 function createAccount(name, type, cb) {
   var options = {
-  uri: 'http://api.reimaginebanking.com/customers/580ba86e360f81f104544d31/accounts?key='+config.CapitalOneKey,
+  uri: 'http://api.reimaginebanking.com/customers/'+username+'/accounts?key='+config.CapitalOneKey,
   method: 'POST',
   json:
     {
@@ -27,7 +28,7 @@ exports.createAccount = createAccount;
 
 
 function getAccounts(type,cb){
-  request('http://api.reimaginebanking.com/customers/580ba86e360f81f104544d31/accounts?key='+config.CapitalOneKey
+  request('http://api.reimaginebanking.com/customers/'+username+'/accounts?key='+config.CapitalOneKey
   , function (error, response, body) {
     if (!error && response.statusCode == 200) {
       var jsonResponse = JSON.parse(body);
