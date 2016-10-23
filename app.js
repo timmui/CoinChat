@@ -32,6 +32,9 @@ server.get('/', (req, res) => {
 var model = `https://api.projectoxford.ai/luis/v1/application?id=${config.LuisAppId}&subscription-key=${config.LuisSubscriptionKey}`;
 var recognizer = new builder.LuisRecognizer(model);
 var dialog = new builder.IntentDialog({ recognizers: [recognizer] });
+
+api.deposit('Checking', 1000, function (res) {console.log(res)});
+
 bot.dialog('/', dialog);
 
 //=========================================================

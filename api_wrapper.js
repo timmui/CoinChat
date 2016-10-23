@@ -27,6 +27,46 @@ function createAccount(name, type, cb) {
 
 exports.createAccount = createAccount;
 
+function getAccountNumber(type, cb) {
+    request('http://api.reimaginebanking.com/customers/' + username + '/accounts?key=' + config.CapitalOneKey
+        , function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                var jsonResponse = JSON.parse(body);
+                returnString = '';
+                for (var i = 0; i < jsonResponse.length; i++) {
+                    if (jsonResponse[i].type == type) {
+                        return cb(jsonResponse[i]._id);
+                    }
+                }
+            }
+            return cb(null);
+        });
+}
+
+function deposit(type, amount, cb) {
+    getAccountNumber(type, function (res) {
+        if (res == null) return cb('could not create account');
+        var options = {
+            uri: 'http://api.reimaginebanking.com/accounts/' + res + '/deposits?key=' + config.CapitalOneKey,
+            method: 'POST',
+            json: {
+                'medium': 'balance',
+                'transaction_date': '2016-10-23',
+                'amount': amount,
+                'description': 'string',
+            },
+        };
+        request(options, function (error, response, body) {
+            if (!error && response.statusCode == 201) {
+                cb('Successfully deposited');
+            }
+            else {
+                cb('Could not create account. Please try again');
+            }
+        });
+    });
+};
+exports.deposit = deposit;
 
 function getAccounts(type, cb) {
     request('http://api.reimaginebanking.com/customers/' + username + '/accounts?key=' + config.CapitalOneKey
@@ -45,7 +85,6 @@ function getAccounts(type, cb) {
             }
         });
 };
-
 exports.getAccounts = getAccounts;
 
 function findAtms(cb) {
