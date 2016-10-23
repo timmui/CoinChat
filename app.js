@@ -78,17 +78,26 @@ dialog.matches('ViewAccount', [
     (session, args, next) => {
         var accountType = builder.EntityRecognizer.findEntity(args.entities, 'AccountType');
         if (!accountType) {
-            builder.Prompts.choice(session, 'Which account do you want to view?', ['Checking', 'Savings', 'Credit Card']);
+            builder.Prompts.choice(session, 'Which account do you want to view?', ['Checking', 'Savings', 'Credit Card', 'All']);
         } else {
             return next({ response: accountType });
         }
     },
     (session, results) => {
         if (results.response) {
-            session.send(`Ok, here is your ${results.response.entity} account.`);
-            api.getAccounts(results.response.entity, function (str) {
-                session.send(`${str} \n\nIs there anything else I can help you with?`);
-            });
+            if (results.response.entity == 'All'){
+                session.send('Ok, here are all of your accounts.');
+                api.getAccounts('Checking', function(str){ session.send(str); });
+                api.getAccounts('Savings', function(str){ session.send(str); });
+                api.getAccounts('Credit Card', function(str){
+                    session.send(`${str} \n\nIs there anything else I can help you with?`);
+                });
+            } else {
+                session.send(`Ok, here is your ${results.response.entity} account.`);
+                api.getAccounts(results.response.entity, function (str) {
+                    session.send(`${str} \n\nIs there anything else I can help you with?`);
+                });
+            }
         } else {
             session.send('Something went wrong.');
         }
