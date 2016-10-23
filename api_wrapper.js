@@ -3,7 +3,7 @@ var config = require('./config')
 
 function createAccount(name, type, cb) {
   var options = {
-  uri: 'http://api.reimaginebanking.com/customers/580ba86e360f81f104544d31/accounts?key=d59fc09cebd567efde7e4bf628a2bb86',
+  uri: 'http://api.reimaginebanking.com/customers/580ba86e360f81f104544d31/accounts?key='+config.CapitalOneKey,
   method: 'POST',
   json:
     {
