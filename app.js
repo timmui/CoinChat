@@ -1,6 +1,6 @@
 var restify = require('restify');
 var builder = require('botbuilder');
-
+var api = require('./api_wrapper');
 var config = require('./config');
 
 //=========================================================
@@ -55,10 +55,18 @@ dialog.matches('CreateAccount', [
     },
     (session, results) => {
         if (results.response) {
-            session.send(`Ok, opening a ${results.response.entity} account.`);
+          session.userData = results.response.entity;
+          builder.Prompts.text(session, 'Enter a name for your new ' + results.response.entity + ' account');
         } else {
             session.send('Something went wrong.');
         }
+    },
+    (session, results) => {
+      var str = '';
+      for (var i in session.userData) {
+        str = str + session.userData[i];
+      }
+      api.createAccount(results.response, str, function(str) {session.send(str)});
     }
 ]);
 
@@ -74,6 +82,7 @@ dialog.matches('ViewAccount', [
     (session, results) => {
         if (results.response) {
             session.send(`Ok, here is your ${results.response.entity} account.`);
+            api.getAccounts(results.response.entity, function (str) {session.send(str)});
         } else {
             session.send('Something went wrong.');
         }
@@ -82,7 +91,8 @@ dialog.matches('ViewAccount', [
 
 dialog.matches('FindATM', [
     (session, args, next) => {
-        session.send('Here are ATMs.');
+      session.send('Here are the nearest ATMs')
+      api.findAtms(function (str) {session.send(str)});
     }
 ]);
 
@@ -96,4 +106,4 @@ dialog.matches('ScanCheck', [
     }
 ])
 
-dialog.onDefault(builder.DialogAction.send('I\'m sorry, I didn\'t quite catch that.'));
+dialog.onDefault(builder.DialogAction.send('I\'m sorry, I didn\'t quite catch that. How can I help you?'));
