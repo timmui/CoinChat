@@ -68,7 +68,9 @@ dialog.matches('CreateAccount', [
         for (var i in session.userData) {
             str = str + session.userData[i];
         }
-        api.createAccount(results.response, str, function (str) { session.send(str) ; });
+        api.createAccount(results.response, str, function (str) { 
+            session.send(`${str} \n\nIs there anything else I can help you with?`);
+        });
     },
 ]);
 
@@ -84,7 +86,9 @@ dialog.matches('ViewAccount', [
     (session, results) => {
         if (results.response) {
             session.send(`Ok, here is your ${results.response.entity} account.`);
-            api.getAccounts(results.response.entity, function (str) { session.send(str); });
+            api.getAccounts(results.response.entity, function (str) {
+                session.send(`${str} \n\nIs there anything else I can help you with?`);
+            });
         } else {
             session.send('Something went wrong.');
         }
@@ -93,20 +97,34 @@ dialog.matches('ViewAccount', [
 
 dialog.matches('FindATM', [
     (session, args, next) => {
-        session.send('Here are the nearest ATMs');
-        api.findAtms(function (str) { session.send(str) ; });
+        session.send('Here are the nearest ATMs:');
+        api.findAtms(function (str) {
+            session.send(`${str} \n\nIs there anything else I can help you with?`);
+        });
     },
 ]);
 
 dialog.matches('ScanCheck', [
     (session, args) => {
-        builder.Prompts.attachment(session, 'Please take a picture of the check');
+        builder.Prompts.attachment(session, 'Please take a picture of the check.');
     },
     (session, results) => {
         console.error('Processing image: ' + session.message.attachments[0].contentUrl);
-        api.scanCheck(session.message.attachments[0].contentUrl, (str) => { 
-            session.send(str);
+        api.scanCheck(session.message.attachments[0].contentUrl, (str) => {
+            session.send(`${str} \n\nIs there anything else I can help you with?`);
         });
+    }
+]);
+
+dialog.matches('Confirm', [
+    (session) => {
+        session.send('What would you like to do?');
+    },
+]);
+
+dialog.matches('Goodbye', [
+    (session) => {
+        session.send('Goodbye. Thank you for using ChatBot!');
     },
 ]);
 

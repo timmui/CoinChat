@@ -17,10 +17,10 @@ function createAccount(name, type, cb) {
     request(options, (error, response, body) => {
         if (!error && response.statusCode == 201) {
             console.log(body);
-            cb('Account Successfully Created');
+            cb('Account successfully created.');
         }
         else {
-            cb('Could not create account. Please try again');
+            cb('Could not create account. Please try again.');
         }
     });
 };
@@ -128,7 +128,7 @@ function scanCheck(imageUrl, cb) {
             // Deposit the amount
             deposit('Checking', dollarValue, (success) => {
                 if (success) {
-                    return cb(`$${dollarValue} was deposited into your checking account`);
+                    return cb(`$${dollarValue} was deposited into your checking account.`);
                 }
                 else {
                     return cb('Sorry, something went wrong. Can you please try again?');
