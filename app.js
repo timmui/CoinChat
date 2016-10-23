@@ -2,6 +2,7 @@ var restify = require('restify');
 var builder = require('botbuilder');
 var api = require('./api_wrapper');
 var config = require('./config');
+var util = require('./util');
 
 //=========================================================
 // Bot Setup
@@ -27,6 +28,10 @@ server.post('/api/messages', connector.listen());
 server.get('/', (req, res) => {
     res.send(200, `API Version ${config.apiVersion} currently running.`);
 });
+
+// Setup Capital One
+util.resetDemo();
+server.get('/resetDemo', util.resetDemo);
 
 // LUIS Setup
 var model = `https://api.projectoxford.ai/luis/v1/application?id=${config.LuisAppId}&subscription-key=${config.LuisSubscriptionKey}`;
