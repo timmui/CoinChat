@@ -62,7 +62,6 @@ dialog.matches('CreateAccount', [
         }
     },
     (session, results) => {
-      console.log(results.response)
       str = '';
       for (var i in session.userData) {
         str = str + session.userData[i];
