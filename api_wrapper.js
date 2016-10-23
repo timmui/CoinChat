@@ -1,9 +1,9 @@
 var request = require('request');
 var config = require('./config');
 var async = require('async');
-const username = config.account;
+const username = config.CapitalOneUser;
 
-function deleteUser(cb){
+function deleteUser(cb) {
     var options = {
         uri: 'http://api.reimaginebanking.com/accounts/' + username + '?key=' + config.CapitalOneKey,
         method: 'DELETE',
@@ -156,6 +156,24 @@ function getAccounts(type, cb) {
         });
 };
 exports.getAccounts = getAccounts;
+
+function getNetWorth(cb) {
+    request('http://api.reimaginebanking.com/customers/' + username + '/accounts?key=' + config.CapitalOneKey
+        , (error, response, body) => {
+            if (!error && response.statusCode == 200) {
+                var jsonResponse = JSON.parse(body);
+                console.log(jsonResponse);
+                
+                // TODO: the math for this
+                var totalAsset=0;
+                var totalDebt=0;
+                var netWorth = totalAsset - totalDebt;
+                return cb(`Total Assets: $${totalAsset}\nTotal Debts: $${totalDebt}\nNet Worth: $${netWorth}`);
+            }
+        });
+};
+exports.getNetWorth = getNetWorth;
+
 
 function findAtms(cb) {
     request('http://api.reimaginebanking.com/atms?lat=38.9072&lng=-77.1753&rad=5&key=' + config.CapitalOneKey, (error, response, body) => {

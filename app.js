@@ -123,7 +123,9 @@ dialog.matches('ScanCheck', [
 
 dialog.matches('NetWorth', [
     (session, args) => {
-        //TODO add api call
+        api.getNetWorth((str) => {
+            session.send(`Here are your results:\n${str}\n\nIs there anything else I can help you with?`);
+        });
     },
 ]);
 
