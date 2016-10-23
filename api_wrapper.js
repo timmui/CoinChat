@@ -45,7 +45,7 @@ function getAccountNumber(type, cb) {
 
 function deposit(type, amount, cb) {
     getAccountNumber(type, function (res) {
-        if (res == null) return cb('could not create account');
+        if (res == null) return cb(false);
         var options = {
             uri: 'http://api.reimaginebanking.com/accounts/' + res + '/deposits?key=' + config.CapitalOneKey,
             method: 'POST',
@@ -58,10 +58,10 @@ function deposit(type, amount, cb) {
         };
         request(options, function (error, response, body) {
             if (!error && response.statusCode == 201) {
-                cb('Successfully deposited');
+                cb(true);
             }
             else {
-                cb('Could not create account. Please try again');
+                cb(false);
             }
         });
     });
@@ -122,9 +122,19 @@ function scanCheck(imageUrl, cb) {
             var dollarValue = '';
             var filteredJson = jsonResponse.match(/\$[^t]*.*/g);
             //console.log(filteredJson);
-            var dollarValue = filteredJson[0].match(/\d+(\.\d{2})/g);
-            //console.log(dollarValue);
-            cb(`$ ${dollarValue}`);
+            var dollarValue = parseFloat(filteredJson[0].match(/\d+(\.\d{2})/g));
+            console.log(dollarValue);
+
+            // Deposit the amount
+            deposit('Checking', dollarValue, (success) => {
+                if (success) {
+                    return cb(`$${dollarValue} was deposited into your checking account`);
+                }
+                else {
+                    return cb('Sorry, something went wrong. Can you please try again?');
+                }
+                
+            });
         }
         else {
             cb('Sorry, I didn\'t catch that. Can you please try again?');

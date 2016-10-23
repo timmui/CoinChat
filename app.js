@@ -33,8 +33,6 @@ var model = `https://api.projectoxford.ai/luis/v1/application?id=${config.LuisAp
 var recognizer = new builder.LuisRecognizer(model);
 var dialog = new builder.IntentDialog({ recognizers: [recognizer] });
 
-api.deposit('Checking', 1000, function (res) {console.log(res)});
-
 bot.dialog('/', dialog);
 
 //=========================================================
@@ -105,8 +103,8 @@ dialog.matches('ScanCheck', [
         builder.Prompts.attachment(session, 'Please take a picture of the check');
     },
     (session, results) => {
-        //console.error(session.message.attachments);
-        api.scanCheck(session.message.attachments, (str) => { 
+        console.error('Processing image: ' + session.message.attachments.contentUrl);
+        api.scanCheck(session.message.attachments.contentUrl, (str) => { 
             session.send(str);
         });
     },
