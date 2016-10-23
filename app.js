@@ -55,10 +55,19 @@ dialog.matches('CreateAccount', [
     },
     (session, results) => {
         if (results.response) {
-            session.send(`Ok, opening a ${results.response.entity} account.`);
+          session.userData = results.response.entity;
+          builder.Prompts.text(session, 'Enter a name for your new ' + results.response.entity + ' account');
         } else {
             session.send('Something went wrong.');
         }
+    },
+    (session, results) => {
+      console.log(results.response)
+      str = '';
+      for (var i in session.userData) {
+        str = str + session.userData[i];
+      }
+      api.createAccount(results.response, str, function(str) {session.send(str)});
     }
 ]);
 
@@ -98,4 +107,4 @@ dialog.matches('ScanCheck', [
     }
 ])
 
-dialog.onDefault(builder.DialogAction.send('I\'m sorry, I didn\'t quite catch that.'));
+dialog.onDefault(builder.DialogAction.send('I\'m sorry, I didn\'t quite catch that. How can I help you?'));
