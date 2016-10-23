@@ -75,7 +75,7 @@ function getAccounts(type, cb) {
                 var jsonResponse = JSON.parse(body);
                 returnString = '';
                 for (var i = 0; i < jsonResponse.length; i++) {
-                    if (jsonResponse[i].type !== type) continue;
+                    if (jsonResponse[i].type.toLowerCase() !== type.toLowerCase()) continue;
                     var delimiter = ',';
                     if (i == jsonResponse.length - 1) delimiter = '';
                     returnString = returnString + jsonResponse[i].type + ' (' + jsonResponse[i].nickname + ')'
