@@ -92,7 +92,7 @@ dialog.matches('ViewAccount', [
 
 dialog.matches('FindATM', [
     (session, args, next) => {
-      session.send("Here are the nearest ATM's")
+      session.send('Here are the nearest ATMs')
       api.findAtms(function (str) {session.send(str)});
     }
 ]);
