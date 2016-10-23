@@ -237,7 +237,7 @@ function getAccounts(type, cb) {
                     var delimiter = ',';
                     if (i == jsonResponse.length - 1) delimiter = '';
                     returnString = returnString + jsonResponse[i].type + ' (' + jsonResponse[i].nickname + ') '
-                        + '$' + jsonResponse[i].balance.toFixed(2) + delimiter + '\n\n';
+                        + '$' + jsonResponse[i].balance.toFixed(2) + '\n\n';
                 }
                 return cb(returnString);
             }
@@ -278,9 +278,9 @@ function findAtms(cb) {
             var jsonResponse = JSON.parse(body).data;
             var str = '';
             for (var i = 0; i < 2; i++) {
-                str += jsonResponse[i].name + ' , ';
-                str += ('Address: ' + jsonResponse[i].address.street_number + ' ' + jsonResponse[i].address.street_name + ', ' + jsonResponse[i].address.city) + ', ';
-                str += ('Hours: ' + jsonResponse[i].hours[0]) + '\n\n';
+                str += jsonResponse[i].name;
+                str += ('\n\nAddress: ' + jsonResponse[i].address.street_number + ' ' + jsonResponse[i].address.street_name + ', ' + jsonResponse[i].address.city) + ', ';
+                str += ('\n\nHours: ' + jsonResponse[i].hours[0]) + '\n\n\n\n';
             }
             return cb(str);
         }
