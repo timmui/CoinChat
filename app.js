@@ -37,9 +37,10 @@ bot.dialog('/', dialog);
 //=========================================================
 // Bots Dialogs
 //=========================================================
+
 dialog.matches('Greeting', [
     (session) => {
-        session.send(['Greetings!', 'Hello!', 'Hi!']);
+        session.send(['Greetings! How can I help you today?', 'Hello! How can I help you today?', 'Hi! How can I help you today?']);
     },
 ]);
 
